@@ -40,7 +40,7 @@ def init_transcription():
     except Exception as ex:
         messagebox.showerror("Error", str(ex))
     finally:
-        start_button.config(state="normal", text="Start")
+        start_button.config(state="disabled", text="Start")
         file_to_transcribe = None
         selected_file_label.config(text="")
 
