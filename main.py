@@ -10,7 +10,8 @@ file_to_transcribe: str | None = None
 
 def get_file_pick():
     ALLOWED_FILE_TYPES = [
-        ("MP3 file", "*.mp3"),
+        ("MPEG file", ("*.mp3","*.mp4")),
+        # ("MP4 file", "*.mp4"),
     ]
 
     picked_file = askopenfilename(filetypes=ALLOWED_FILE_TYPES)
@@ -43,6 +44,7 @@ def init_transcription():
         start_button.config(state="disabled", text="Start")
         file_to_transcribe = None
         selected_file_label.config(text="")
+        messagebox.showinfo("Success", "File successfully transcribed!")
 
 
 def transcribe(file):
