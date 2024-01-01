@@ -1,6 +1,5 @@
 import os
 import threading
-import time
 from tkinter import *
 from tkinter import ttk, messagebox
 from tkinter.filedialog import askopenfilename
@@ -31,8 +30,7 @@ class View:
 
         ttk.Label(
             self.control_frame,
-            text="Pick a file to transcribe!\n"
-            "Program will freeze while transcription is in progress!",
+            text="Pick a file to transcribe!",
             font="bold",
         ).grid(column=0, row=0)
         ttk.Button(
@@ -44,9 +42,9 @@ class View:
         self.root.title(string="Helga's tool")
         self.root_frame.grid()
         self.control_frame.grid(column=0, row=0)
-        self.selected_file_label.grid(column=0, row=1)
+        self.selected_file_label.grid(column=0, row=3)
 
-        self.start_button.grid(column=1, row=2)
+        self.start_button.grid(column=0, row=4)
         self.start_button.config(state="disabled")
 
     def update(self, state: "State"):
@@ -130,7 +128,6 @@ class Controller:
     def init_transcription(self):
         self.__state.signal_transcription_start()
         print(f"Transcribing {self.__state.file_to_transcribe}.")
-        time.sleep(1.5)
 
         try:
             result_text = self.__transcribe(self.__state.file_to_transcribe)
@@ -145,14 +142,12 @@ class Controller:
 
 
 if __name__ == "__main__":
-    # root.mainloop()
-
-    # init MVC pattern
+    # init MVC pattern ...
     state = State()
     controller = Controller(state)
     view = View(controller)
 
     state.add_view(view)
 
-    # and run program
+    # ... and run program
     view.root.mainloop()
