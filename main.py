@@ -1,7 +1,6 @@
 import os
 import threading
-from tkinter import *
-from tkinter import ttk, messagebox
+from tkinter import ttk, messagebox, Tk
 from tkinter.filedialog import askopenfilename
 
 import whisper
@@ -38,7 +37,8 @@ class View:
         ).grid(column=0, row=2)
 
         # set some UI params
-        self.root.minsize(500, 200)
+        self.root.minsize(600, 180)
+        self.root.maxsize(600, 180)
         self.root.title(string="Helga's tool")
         self.root_frame.grid()
         self.control_frame.grid(column=0, row=0)
@@ -98,7 +98,7 @@ class Controller:
 
     def select_file(self):
         picked_file = askopenfilename(filetypes=[("MPEG file", ("*.mp3", "*.mp4"))])
-        if picked_file is not None and os.path.exists(picked_file):
+        if picked_file and os.path.exists(picked_file):
             self.__state.update_file(picked_file)
 
     @staticmethod
