@@ -1,4 +1,5 @@
 import os
+import threading
 import time
 from tkinter import *
 from tkinter import ttk, messagebox
@@ -19,7 +20,13 @@ class View:
         self.control_frame = ttk.Frame(self.root_frame, padding=16)
         self.selected_file_label = ttk.Label(self.control_frame, text="")
         self.start_button = ttk.Button(
-            self.control_frame, text="Start", command=self.controller.init_transcription
+            self.control_frame,
+            text="Start",
+            command=(
+                lambda: threading.Thread(
+                    target=self.controller.init_transcription
+                ).start()
+            ),
         )
 
         ttk.Label(
@@ -115,7 +122,6 @@ class Controller:
 
         # clip off file extension
         filename_no_extension = ".".join(transcribed_file.split(".")[:-1])
-
         result_filename = ".".join((filename_no_extension, "txt"))
 
         with open(result_filename, "w") as file:
@@ -145,6 +151,7 @@ if __name__ == "__main__":
     state = State()
     controller = Controller(state)
     view = View(controller)
+
     state.add_view(view)
 
     # and run program
